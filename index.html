@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yomulia</title>
+<style>
+body{margin:0;font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;background:#F4ECDF;color:#3B2A20;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:24px;box-sizing:border-box}
+a{display:inline-block;margin-top:18px;padding:12px 22px;border-radius:0;background:#3B2A20;color:#FBF6EE;text-decoration:none;font-weight:700}
+p{line-height:1.8;font-size:14px}
+</style>
+</head>
+<body>
+<div>
+<p>Yomuliaに戻っています…</p>
+<a id="back" href="yomulia://auth/notion">アプリに戻る</a>
+</div>
+<script>
+// Notionの連携画面から戻ってきたら、受け取った値（code・state）をそのままアプリへ渡す
+// stateが「w.」で始まるときはWeb版（ブラウザ）からの連携なので、Web版のサイトへ送り返す
+var st = new URLSearchParams(location.search).get("state") || "";
+var web = st.indexOf("w.") === 0;
+var u = (web ? "https://linnon-yomulia.pages.dev/api/auth/callback" : "yomulia://auth/notion") + location.search;
+if (web) document.getElementById("back").textContent = "Yomuliaに戻る";
+document.getElementById("back").href = u;
+location.replace(u);
+</script>
+</body>
+</html>
